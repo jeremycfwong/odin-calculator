@@ -34,6 +34,7 @@ var calValues = document.querySelector("#values")
 var value1 = NaN
 var operator = ''
 var chain = false
+var decimal = false
 
 calValues.addEventListener('click', event =>{
     if (event.target.tagName === 'BUTTON'){
@@ -48,6 +49,8 @@ calValues.addEventListener('click', event =>{
                     value1 = operate(operator, value1,fetchValue())
                     document.getElementById("display").innerText = value1
                     operator = ''
+                    chain = true
+                    decimal = false;
                 }
                 break;
             case '+':
@@ -56,7 +59,8 @@ calValues.addEventListener('click', event =>{
             case '/':
                 if(isNaN(value1)){
                     operator = event.target.id
-                    value1 = fetchValue() 
+                    value1 = fetchValue()
+                    decimal = false;
                 } else if (operator != '' && !isNaN(value1)){
                     value1 = operate(operator, value1,fetchValue())
                     document.getElementById("display").innerText = value1
@@ -66,14 +70,25 @@ calValues.addEventListener('click', event =>{
                 } else {
                     operator = event.target.id
                 }
-                break;
+                break;  
             default:
+                if (document.getElementById("display").innerText == "ERROR"){
+                    break;
+                }
+
                 if (chain){
                     clearDisplay()
                     chain = false
-                } else if (document.getElementById("display").innerText == "ERROR"){
+                } 
+                
+                if (event.target.id == '.'){
+                    if (!decimal){
+                        updateDisplay(event.target.id);
+                        decimal = true
+                    } 
                     break;
                 }
+            
                 updateDisplay(event.target.id)
                 break;
         }

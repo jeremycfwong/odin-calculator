@@ -1,0 +1,41 @@
+.container{
+    height: 30vh;
+    width: 20vh;
+    border: 2px solid black;
+    border-radius: 16px;
+    margin: 0 auto;
+    background-color: grey;
+}
+
+button {
+    font-size: 24px;
+    width: 25%;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+#clear {
+    margin-top: 25px;
+    width: 50%;
+}
+
+.row{
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+
+}
+
+#display {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    width: 80%;
+    background-color:rgb(39, 46, 41);
+    color: greenyellow;
+    padding: 20px;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid black;
+}
+
