@@ -11,7 +11,10 @@ function multiply(v1, v2){
 }
 
 function divide(v1, v2){
-    return v1 / v2;
+    if(v2 == 0){
+        return 'ERROR'
+    }
+    return Math.round(v1 / v2 *10000) / 10000;
 }
 
 function operate(operator, v1, v2){
@@ -68,6 +71,8 @@ calValues.addEventListener('click', event =>{
                 if (chain){
                     clearDisplay()
                     chain = false
+                } else if (document.getElementById("display").innerText == "ERROR"){
+                    break;
                 }
                 updateDisplay(event.target.id)
                 break;
