@@ -57,65 +57,6 @@ calValues.addEventListener('click', event =>{
     updateDisplay(buttonText, replaceDisplay);
 })
 
-/*calValues.addEventListener('click', event =>{
-    if (event.target.tagName === 'BUTTON'){
-        switch (event.target.id){
-            case 'clear':
-                clearDisplay();
-                value1 = NaN
-
-                break;
-            case '=':
-                if(operator != '' && !isNaN(value1)){
-                    value1 = operate(operator, value1,fetchValue())
-                    document.getElementById("display").innerText = value1
-                    operator = ''
-                    chain = true
-                    decimal = false;
-                }
-                break;
-            case '+':
-            case '-':
-            case '*':
-            case '/':
-                if(isNaN(value1)){
-                    operator = event.target.id
-                    value1 = fetchValue()
-                    decimal = false;
-                } else if (operator != '' && !isNaN(value1)){
-                    value1 = operate(operator, value1,fetchValue())
-                    document.getElementById("display").innerText = value1
-                    operator = event.target.id
-                    chain = true
-                    break;
-                } else {
-                    operator = event.target.id
-                }
-                break;  
-            default:
-                if (document.getElementById("display").innerText == "ERROR"){
-                    break;
-                }
-
-                if (chain){
-                    clearDisplay()
-                    chain = false
-                } 
-                
-                if (event.target.id == '.'){
-                    if (!decimal){
-                        updateDisplay(event.target.id);
-                        decimal = true
-                    } 
-                    break;
-                }
-            
-                updateDisplay(event.target.id)
-                break;
-        }
-    }
-})*/
-
 
 function updateDisplay(unit, replace){
     if(value1 == '') {
