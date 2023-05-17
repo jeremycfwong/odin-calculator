@@ -34,29 +34,53 @@ var calValues = document.querySelector("#values")
 var value1 = ''
 var value2 = ''
 var operator = ''
-//var decimal = false
+var operatorInput = false
+var computed = false
+var decimal = false
 
 calValues.addEventListener('click', event =>{
-    let button_act = event.target
-    let buttonText = button_act.id;
-    if(button_act.className === 'operand'){
+    let buttonAct = event.target
+    let buttonText = buttonAct.id; 
+
+    if(buttonAct.className === 'operand'){
+        if (operator != ''){
+            computeResult()
+        }
+
         operator = buttonText;
+        operatorInput = true;
     } else if(buttonText === '=') {
-        let result = operate(operator, Number(value1), Number(value2));
-        updateDisplay(result, true);
-        clearValues();
-        return;
+        computeResult();
+        computed = true;
     } else if(buttonText === 'clear'){
         clearDisplay();
-        clearValues();
-        return;
-    } else {
-        firstInputChain() ? value1 += buttonText : value2 += buttonText;
+        changeValues();
+    } else if (buttonAct.className == 'number') {
+        updateValues(buttonText);
+        operatorInput = false
+        computed = false
+    } else if (buttonText === '.'){
+        updateValues(buttonText);
+        decimal = true
     }
-    replaceDisplay = firstInput() ? true : false;
-    updateDisplay(buttonText, replaceDisplay);
 })
 
+function updateValues(text){
+    if (computed){
+        value1 = ''
+    }
+
+    let replace = shouldReplace();
+    firstInput() ? value1 += text : value2 += text;
+    updateDisplay(text, replace);
+}
+
+function computeResult(){
+    let result = operate(operator, Number(value1), Number(value2));
+    updateDisplay(result, true);
+    changeValues(result)
+    decimal = false
+}
 
 function updateDisplay(unit, replace){
     if(value1 == '') {
@@ -65,7 +89,7 @@ function updateDisplay(unit, replace){
     }
 
     let displayContent = document.getElementById("display");
-    replace ? displayContent.innerHTML = unit : displayContent.innerHTML += unit;
+    replace ? displayContent.innerText = unit : displayContent.innerText += unit;
 }
 
 function clearDisplay() {
@@ -78,18 +102,18 @@ function fetchValue(){
     return result
 }
 
-function clearValues(){
-    value1 = '';
+function changeValues(result='', symbol=''){
+    value1 = result;
     value2 = '';
-    operator = '';
+    operator = symbol;
+}
+
+function shouldReplace() {
+    return value1 === '' || operatorInput || computed;
 }
 
 function firstInput() {
-    return firstInputChain && value1.length == 1;
-}
-
-function firstInputChain() {
-    return isEmpty(operator);
+    return isEmpty(operator) 
 }
 
 function isEmpty(target) {
