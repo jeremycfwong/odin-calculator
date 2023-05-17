@@ -48,6 +48,7 @@ calValues.addEventListener('click', event =>{
         }
 
         operator = buttonText;
+        decimal = false;
         operatorInput = true;
     } else if(buttonText === '=') {
         computeResult();
@@ -56,16 +57,18 @@ calValues.addEventListener('click', event =>{
         clearDisplay();
         changeValues();
     } else if (buttonAct.className == 'number') {
-        updateValues(buttonText);
-        operatorInput = false
-        computed = false
+        updateVariableAndDisplay(buttonText);
     } else if (buttonText === '.'){
-        updateValues(buttonText);
+        if (decimal) {
+            return;
+        }
+
+        updateVariableAndDisplay(buttonText);
         decimal = true
     }
 })
 
-function updateValues(text){
+function updateVariableAndDisplay(text){
     if (computed){
         value1 = ''
     }
@@ -73,6 +76,9 @@ function updateValues(text){
     let replace = shouldReplace();
     firstInput() ? value1 += text : value2 += text;
     updateDisplay(text, replace);
+    
+    operatorInput = false
+    computed = false
 }
 
 function computeResult(){
@@ -96,12 +102,6 @@ function clearDisplay() {
     document.getElementById("display").innerText = '-------'
 }
 
-function fetchValue(){
-    var result = Number(document.getElementById("display").innerText)
-    clearDisplay()
-    return result
-}
-
 function changeValues(result='', symbol=''){
     value1 = result;
     value2 = '';
@@ -113,9 +113,5 @@ function shouldReplace() {
 }
 
 function firstInput() {
-    return isEmpty(operator) 
-}
-
-function isEmpty(target) {
-    return target === '';
+    return operator === '';
 }
